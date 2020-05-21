@@ -18,8 +18,7 @@ const uploadFile = (buffer, key) => {
   const params = {
     Bucket: process.env.S3_BUCKET,
     Body: buffer,
-    ContentType: 'application/pdf',
-    Key: `${key}.pdf`
+    Key: `${key}`
   };
   return s3.putObject(params).promise();
 };
@@ -51,7 +50,7 @@ router.get('/transcript/:key', function(req, res, next) {
 
   const params = {
     Bucket: process.env.S3_BUCKET,
-    Key: `${key}.pdf`
+    Key: `${key}`
   };
 
   s3.getObject(params, async function(err, data) {
@@ -70,12 +69,6 @@ router.get('/transcript/:key', function(req, res, next) {
       });
     }
   });
-});
-
-/* GET transcript data */
-router.get('/test/:key', function(req, res, next) {
-  const key = req.params.key;
-  return res.status(200).send(`HELLO! ${key}`);
 });
 
 module.exports = router;
